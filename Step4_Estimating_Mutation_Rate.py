@@ -48,9 +48,9 @@ os.system("tabix unique_variants.recode.vcf.gz")
 #run gatk to count for mendelian incosistencies
 os.system("cd gatk FindMendelianViolations \
 -I unique_variants.recode.vcf.gz --THREAD_COUNT 16 \
-          -PED /mnt/2ndNAS_folder_forGuilherme/koala/data/Pheno/trio_info.ped --MIN_DP 20 --MIN_GQ 20 --MIN_HET_FRACTION 0.4\
-          --FEMALE_CHROMS /mnt/2ndNAS_folder_forGuilherme/koala/data/alignments/contigs_sex_XZ_scaff.list\
-          -O /home/guilherme/analyses/San_Diego/SNPs/DBimport/report.mendelian_violation_unique_variants.txt")
+          -PED trio_info.ped --MIN_DP 20 --MIN_GQ 20 --MIN_HET_FRACTION 0.4\
+          --FEMALE_CHROMS contigs_sex_XZ_scaff.list\
+          -O report.mendelian_violation_unique_variants.txt")
 
 # %%
 errors = pd.read_csv("report.mendelian_violation_unique_variants.txt",sep="\t",comment="#")
@@ -175,7 +175,7 @@ allel.vcf_to_hdf5('all_contigs_filteredv2.recode.vcf.gz', 'all_contigs_filteredv
 
 # %%
 import h5py
-callset = h5py.File('all_contigs_filteredv2.h5', mode='r')
+callset = h5py.File('all_contigs_filtered.h5', mode='r')
 callset.keys()
 
 # %%
